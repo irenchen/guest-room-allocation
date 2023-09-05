@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './styles.css'
+import './App.css'
 
 import circlePlus from './assets/circle-plus.svg'
 import circleMinus from './assets/circle-minus.svg'
