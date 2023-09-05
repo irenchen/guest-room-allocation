@@ -1,0 +1,7 @@
+{
+  "name": "guest-room-allocation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "allenchen <iren_chen@hotmail.com>",
+  "license": "MIT"
+}
