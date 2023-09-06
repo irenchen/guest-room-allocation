@@ -1,0 +1,59 @@
+* {
+  /* 避免在mobile safari中，長按時出現的callout或text selection現象 */
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.h-container {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.box {
+  margin: 0.5rem;
+  border: 1px solid #5555;
+  border-radius: 0.25rem;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+
+input {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.btn:active {
+  background-color: #5555;
+}
+
+img {
+  width: 3rem;
+  height: 3rem;
+}

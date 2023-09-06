@@ -1,0 +1,42 @@
+.room-container {
+  border-bottom: 1px solid #0005;
+}
+
+.room-state {
+  font-size: 1.25rem;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 0.25rem;
+}
+
+.field-adult {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+
+.label-adult {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.field-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+
+.label-child {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.label-title {
+  font-size: 1rem;
+}
+
+.label-subtitle {
+  color: #777;
+  font-size: 1rem;
+}

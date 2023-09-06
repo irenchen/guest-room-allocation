@@ -1,0 +1,31 @@
+.allocation-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.room-facts {
+  font-size: 1.25rem;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 0.25rem;
+}
+
+.room-error {
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 0.25rem;
+  background-color: #d885;
+  border: 1px solid #8339;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+.room-message {
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 0.25rem;
+  background-color: #8dd5;
+  border: 1px solid #3559;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}

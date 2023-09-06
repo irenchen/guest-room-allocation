@@ -1,19 +1,19 @@
 import React from 'react'
 
 import './App.css'
-
-import circlePlus from './assets/circle-plus.svg'
-import circleMinus from './assets/circle-minus.svg'
+import RoomAllocation from './components/RoomAllocation/RoomAllocation'
 
 const App = () => {
   return (
-    <>
-      <h1>Guest Room Allocation Page</h1>
-      <div>
-        <img src={circlePlus} alt="plus" width="50" height="50" />
-        <img src={circleMinus} alt="minus" width="50" height="50" />
-      </div>
-    </>
+    <div className="container">
+      <RoomAllocation
+        guest={9}
+        room={3}
+        onChange={results => {
+          console.log({ results })
+        }}
+      />
+    </div>
   )
 }
 
