@@ -73,6 +73,7 @@ const CustomInputNumber = ({
   const [focus, setFocus] = useState(false)
 
   const onInputFocus = () => {
+    signal.current = 0
     setFocus(true)
   }
 
@@ -104,7 +105,6 @@ const CustomInputNumber = ({
 
   const signal = useRef<-1 | 0 | 1>(0)
   const downTime = useRef(Date.now())
-  const [release, setRelease] = useState(false)
 
   const timer = useRef<NodeJS.Timeout | null>(null)
   useEffect(() => {
@@ -115,7 +115,15 @@ const CustomInputNumber = ({
         if (Date.now() - downTime.current > THROTTLE_PERIOD) {
           downTime.current = Date.now()
           setCounter(c => verifyCounter(c - step))
-          counterRef.current = verifyCounter(counterRef.current - step)
+          if (counterRef.current !== verifyCounter(counterRef.current - step)) {
+            counterRef.current = verifyCounter(counterRef.current - step)
+            onChange({
+              target: {
+                name,
+                value: counterRef.current,
+              },
+            })
+          }
         }
       }
 
@@ -123,7 +131,15 @@ const CustomInputNumber = ({
         if (Date.now() - downTime.current > THROTTLE_PERIOD) {
           downTime.current = Date.now()
           setCounter(c => verifyCounter(c + step))
-          counterRef.current = verifyCounter(counterRef.current + step)
+          if (counterRef.current !== verifyCounter(counterRef.current + step)) {
+            counterRef.current = verifyCounter(counterRef.current + step)
+            onChange({
+              target: {
+                name,
+                value: counterRef.current,
+              },
+            })
+          }
         }
       }
     }, 100)
@@ -144,24 +160,29 @@ const CustomInputNumber = ({
     downTime.current = Date.now()
     minusStart.current = Date.now()
     signal.current = -1
-    setRelease(false)
   }
 
   const onMinusUp = () => {
     signal.current = 0
+
     const delta = Date.now() - minusStart.current
     if (delta < MAX_CLICK_DURATION) {
       setCounter(c => verifyCounter(c - step))
-      counterRef.current = counterRef.current - step
+      counterRef.current = verifyCounter(counterRef.current - step)
       onChange({
         target: {
           name,
-          value: verifyCounter(counter - step),
+          value: counterRef.current,
         },
       })
-    } else {
-      setRelease(true)
     }
+
+    onChange({
+      target: {
+        name,
+        value: counterRef.current,
+      },
+    })
   }
 
   const plusStart = useRef(Date.now())
@@ -174,7 +195,6 @@ const CustomInputNumber = ({
     downTime.current = Date.now()
     plusStart.current = Date.now()
     signal.current = 1
-    setRelease(false)
   }
 
   const onPlusUp = () => {
@@ -183,20 +203,7 @@ const CustomInputNumber = ({
     const delta = Date.now() - plusStart.current
     if (delta < MAX_CLICK_DURATION) {
       setCounter(c => verifyCounter(c + step))
-      counterRef.current = counterRef.current + step
-      onChange({
-        target: {
-          name,
-          value: verifyCounter(counter + step),
-        },
-      })
-    } else {
-      setRelease(true)
-    }
-  }
-
-  useEffect(() => {
-    if (release) {
+      counterRef.current = verifyCounter(counterRef.current + step)
       onChange({
         target: {
           name,
@@ -204,8 +211,14 @@ const CustomInputNumber = ({
         },
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [release])
+
+    onChange({
+      target: {
+        name,
+        value: counterRef.current,
+      },
+    })
+  }
 
   const reachMin = counter <= min
   const reachMax = counter >= max
