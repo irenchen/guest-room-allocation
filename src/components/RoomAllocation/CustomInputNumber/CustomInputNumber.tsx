@@ -205,7 +205,7 @@ const CustomInputNumber = ({
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [release, counter])
+  }, [release])
 
   const reachMin = counter <= min
   const reachMax = counter >= max
@@ -249,6 +249,8 @@ const CustomInputNumber = ({
         <input
           type="number"
           pattern="[0-9]*"
+          min={min}
+          max={max}
           id={name}
           ref={inputRef}
           onChange={onInputChange}
