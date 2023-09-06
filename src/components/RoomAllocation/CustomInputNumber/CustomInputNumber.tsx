@@ -219,6 +219,7 @@ const CustomInputNumber = ({
         className="box btn"
         onPointerDown={onMinusDown}
         onPointerUp={onMinusUp}
+        onPointerCancel={onMinusUp}
         style={{
           position: 'relative',
           border: diableMinus ? '1px solid #5555' : '1px solid #58fa',
