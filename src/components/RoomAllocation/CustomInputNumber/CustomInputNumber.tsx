@@ -31,6 +31,7 @@ type Props = {
   onBlur: (e: CustomInputBlurEvent) => void
 }
 
+const THROTTLE_DELAY = 600
 const THROTTLE_PERIOD = 300
 const MAX_CLICK_DURATION = 300
 
@@ -107,13 +108,20 @@ const CustomInputNumber = ({
   const downTime = useRef(Date.now())
 
   const timer = useRef<NodeJS.Timeout | null>(null)
+  const times = useRef(1)
   useEffect(() => {
+    const start = downTime.current
     timer.current = setInterval(() => {
       if (signal.current === 0) return
 
+      if (Date.now() - downTime.current < THROTTLE_DELAY) return
+
       if (signal.current === -1) {
-        if (Date.now() - downTime.current > THROTTLE_PERIOD) {
-          downTime.current = Date.now()
+        if (
+          Date.now() - start >
+          THROTTLE_DELAY + THROTTLE_PERIOD * times.current
+        ) {
+          times.current++
           setCounter(c => verifyCounter(c - step))
           if (counterRef.current !== verifyCounter(counterRef.current - step)) {
             counterRef.current = verifyCounter(counterRef.current - step)
@@ -128,8 +136,11 @@ const CustomInputNumber = ({
       }
 
       if (signal.current === 1) {
-        if (Date.now() - downTime.current > THROTTLE_PERIOD) {
-          downTime.current = Date.now()
+        if (
+          Date.now() - start >
+          THROTTLE_DELAY + THROTTLE_PERIOD * times.current
+        ) {
+          times.current++
           setCounter(c => verifyCounter(c + step))
           if (counterRef.current !== verifyCounter(counterRef.current + step)) {
             counterRef.current = verifyCounter(counterRef.current + step)
@@ -157,6 +168,7 @@ const CustomInputNumber = ({
   const onMinusDown = () => {
     if (disabled) return
 
+    times.current = 1
     downTime.current = Date.now()
     minusStart.current = Date.now()
     signal.current = -1
@@ -192,6 +204,7 @@ const CustomInputNumber = ({
 
     if (satisfied) return
 
+    times.current = 1
     downTime.current = Date.now()
     plusStart.current = Date.now()
     signal.current = 1
