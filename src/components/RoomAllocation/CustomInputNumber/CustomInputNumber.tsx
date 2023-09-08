@@ -235,6 +235,10 @@ const CustomInputNumber = ({
     })
   }
 
+  const onPointerLeave = () => {
+    signal.current = 0
+  }
+
   const reachMin = counter <= min
   const reachMax = counter >= max
 
@@ -248,6 +252,7 @@ const CustomInputNumber = ({
         onPointerDown={onMinusDown}
         onPointerUp={onMinusUp}
         onPointerCancel={onMinusUp}
+        onPointerLeave={onPointerLeave}
         style={{
           position: 'relative',
           border: diableMinus ? '1px solid #5555' : '1px solid #58fa',
@@ -296,6 +301,7 @@ const CustomInputNumber = ({
         onPointerDown={onPlusDown}
         onPointerUp={onPlusUp}
         onPointerCancel={onPlusUp}
+        onPointerLeave={onPointerLeave}
         style={{
           position: 'relative',
           border: disablePlus ? '1px solid #5555' : '1px solid #58fa',
