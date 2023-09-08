@@ -12,11 +12,18 @@ type RoomResult = {
 type Props = {
   name: string
   available: number
+  availableRef: React.MutableRefObject<number>
   disabled: boolean
   onChange: (result: RoomResult) => void
 }
 
-const RoomInput = ({ name, available, disabled, onChange }: Props) => {
+const RoomInput = ({
+  name,
+  available,
+  availableRef,
+  disabled,
+  onChange,
+}: Props) => {
   const [totalAdult, setTotalAdult] = useState(1)
   const [totalChild, setTotalChild] = useState(0)
 
@@ -36,6 +43,7 @@ const RoomInput = ({ name, available, disabled, onChange }: Props) => {
           value={1}
           disabled={disabled}
           available={available}
+          availableRef={availableRef}
           onChange={e => {
             setTotalAdult(e.target.value)
             onChange({
@@ -58,6 +66,7 @@ const RoomInput = ({ name, available, disabled, onChange }: Props) => {
           value={0}
           disabled={disabled}
           available={available}
+          availableRef={availableRef}
           onChange={e => {
             setTotalChild(e.target.value)
             onChange({

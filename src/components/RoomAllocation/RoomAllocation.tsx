@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import './RoomAllocation.css'
 
@@ -47,6 +47,8 @@ const RoomAllocation = ({ guest, room, onChange }: Props) => {
 
   const invalidGuestRoom = guest < room || guest > room * 4
 
+  const availableRef = useRef(guest - total)
+
   if (invalidGuestRoom) {
     return (
       <div className="allocation-container">
@@ -59,6 +61,8 @@ const RoomAllocation = ({ guest, room, onChange }: Props) => {
   }
 
   const available = guest - total
+  availableRef.current = available
+
   const message =
     available >= 0
       ? `尚未分配人數 : ${available}人`
@@ -79,6 +83,7 @@ const RoomAllocation = ({ guest, room, onChange }: Props) => {
               key={`room${idx}`}
               name={`room${idx}`}
               available={available}
+              availableRef={availableRef}
               disabled={disabled}
               onChange={roomResult => {
                 setResults(r => {

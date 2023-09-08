@@ -27,6 +27,7 @@ type Props = {
   value: number
   disabled: boolean
   available: number
+  availableRef: React.MutableRefObject<number>
   onChange: (e: CustomInputChangeEvent) => void
   onBlur: (e: CustomInputBlurEvent) => void
 }
@@ -43,6 +44,7 @@ const CustomInputNumber = ({
   value,
   disabled,
   available,
+  availableRef,
   onChange,
   onBlur,
 }: Props) => {
@@ -55,9 +57,10 @@ const CustomInputNumber = ({
 
   // 動態修正可連續新增的上限人數
   const maxValue =
-    counterRef.current + available < max ? counterRef.current + available : max
+    counterRef.current + availableRef.current < max
+      ? counterRef.current + availableRef.current
+      : max
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const verifyCounter = (value: number) => {
     if (value < min) return min
     if (value > maxValue) return maxValue
@@ -110,7 +113,6 @@ const CustomInputNumber = ({
   const timer = useRef<NodeJS.Timeout | null>(null)
   const times = useRef(1)
   useEffect(() => {
-    const start = downTime.current
     timer.current = setInterval(() => {
       if (signal.current === 0) return
 
@@ -118,7 +120,7 @@ const CustomInputNumber = ({
 
       if (signal.current === -1) {
         if (
-          Date.now() - start >
+          Date.now() - downTime.current >
           THROTTLE_DELAY + THROTTLE_PERIOD * times.current
         ) {
           times.current++
@@ -137,7 +139,7 @@ const CustomInputNumber = ({
 
       if (signal.current === 1) {
         if (
-          Date.now() - start >
+          Date.now() - downTime.current >
           THROTTLE_DELAY + THROTTLE_PERIOD * times.current
         ) {
           times.current++
@@ -161,7 +163,7 @@ const CustomInputNumber = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setCounter, step, available])
+  }, [setCounter, name, step])
 
   const minusStart = useRef(Date.now())
 
